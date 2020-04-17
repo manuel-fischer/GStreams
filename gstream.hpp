@@ -10,9 +10,6 @@
 #include <algorithm>
 #include <utility>
 
-    template<typename T>
-using GS_removeCVR = typename std::remove_cv<typename std::remove_reference<T>::type>::type;
-
     template<typename GeneratorFunc>
 class GSGenerator
 {
@@ -206,7 +203,7 @@ auto operator|(GSProcessor<ProcessorFuncL> lhs, GSAcceptor<AcceptorFuncR> rhs)
 auto gsRef(GSGenerator<GeneratorFunc>& gen)
 {
     return gsGenerate(
-        [p_generate = &gen.generate](auto yield)
+        [p_generate = std::addressof(gen.generate)](auto yield)
         {
             (*p_generate)(yield);
         }
@@ -217,7 +214,7 @@ auto gsRef(GSGenerator<GeneratorFunc>& gen)
 auto gsRef(GSProcessor<ProcessorFunc>& prc)
 {
     return gsProcess(
-        [p_process = &prc.process]<typename Value, typename Yield>(Value&& value, Yield yield)
+        [p_process = std::addressof(prc.process)]<typename Value, typename Yield>(Value&& value, Yield yield)
         {
             (*p_process)(std::forward<Value>(value), yield);
         }
@@ -228,7 +225,7 @@ auto gsRef(GSProcessor<ProcessorFunc>& prc)
 auto gsRef(GSAcceptor<AcceptorFunc>& act)
 {
     return gsAccept(
-        [p_accept = &act.accept]<typename Value>(Value&& value)
+        [p_accept = std::addressof(act.accept)]<typename Value>(Value&& value)
         {
             (*p_accept)(std::forward<Value>(value));
         }
