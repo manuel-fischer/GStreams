@@ -1,6 +1,14 @@
 # GStreams
 A stream library for C++. It uses a stream protocol, that is driven by generators. That means that a generator pushes the data down the pipeline.
 
+## Overview
+
+1. [Dependencies?](#Dependencies)
+2. [Fast forward documentation](#Fast-forward-documentation)
+3. [Technical Information](Technical-Information)
+4. [Examples](Examples)
+5. [Possible Future changes](Possible-Future-changes)
+
 ## Dependencies?
 Only the standard library of C++, so this little library can almost be called stand alone. Only utility function templates like `move`, `forward`, `addressof` and `for_each` are used. Note that there is some compatibility with containers like `std::vector` and `std::string`. Eg. these can be used with `gsInsertBack`, which calls `container.push_back`.
 
